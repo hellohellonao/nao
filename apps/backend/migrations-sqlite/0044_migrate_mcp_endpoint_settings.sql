@@ -9,4 +9,6 @@ SET `mcp_endpoint_settings` = json_remove(
 	),
 	'$.agentModeEnabled', '$.toolsModeEnabled', '$.objectsModeEnabled'
 )
-WHERE json_type(`mcp_endpoint_settings`, '$.agentModeEnabled') IS NOT NULL;
+WHERE json_type(`mcp_endpoint_settings`, '$.agentModeEnabled') IS NOT NULL
+	OR json_type(`mcp_endpoint_settings`, '$.toolsModeEnabled') IS NOT NULL
+	OR json_type(`mcp_endpoint_settings`, '$.objectsModeEnabled') IS NOT NULL;
