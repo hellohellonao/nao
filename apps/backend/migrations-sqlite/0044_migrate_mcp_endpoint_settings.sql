@@ -1,13 +1,25 @@
 UPDATE `project`
+SET `mcp_endpoint_settings` = json_set(
+	`mcp_endpoint_settings`,
+	'$.subAgentModeEnabled',
+	json_extract(`mcp_endpoint_settings`, '$.agentModeEnabled')
+)
+WHERE json_type(`mcp_endpoint_settings`, '$.agentModeEnabled') IS NOT NULL;
+--> statement-breakpoint
+UPDATE `project`
+SET `mcp_endpoint_settings` = json_set(
+	`mcp_endpoint_settings`,
+	'$.contextLayerModeEnabled',
+	json_extract(`mcp_endpoint_settings`, '$.toolsModeEnabled')
+)
+WHERE json_type(`mcp_endpoint_settings`, '$.toolsModeEnabled') IS NOT NULL;
+--> statement-breakpoint
+UPDATE `project`
 SET `mcp_endpoint_settings` = json_remove(
-	json_patch(
-		`mcp_endpoint_settings`,
-		json_object(
-			'subAgentModeEnabled', `mcp_endpoint_settings` -> 'agentModeEnabled',
-			'contextLayerModeEnabled', `mcp_endpoint_settings` -> 'toolsModeEnabled'
-		)
-	),
-	'$.agentModeEnabled', '$.toolsModeEnabled', '$.objectsModeEnabled'
+	`mcp_endpoint_settings`,
+	'$.agentModeEnabled',
+	'$.toolsModeEnabled',
+	'$.objectsModeEnabled'
 )
 WHERE json_type(`mcp_endpoint_settings`, '$.agentModeEnabled') IS NOT NULL
 	OR json_type(`mcp_endpoint_settings`, '$.toolsModeEnabled') IS NOT NULL
