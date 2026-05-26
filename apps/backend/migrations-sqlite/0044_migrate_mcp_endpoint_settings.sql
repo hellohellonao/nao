@@ -2,7 +2,7 @@ UPDATE `project`
 SET `mcp_endpoint_settings` = json_set(
 	`mcp_endpoint_settings`,
 	'$.subAgentModeEnabled',
-	json_extract(`mcp_endpoint_settings`, '$.agentModeEnabled')
+	json(`mcp_endpoint_settings` -> '$.agentModeEnabled')
 )
 WHERE json_type(`mcp_endpoint_settings`, '$.agentModeEnabled') IS NOT NULL;
 --> statement-breakpoint
@@ -10,7 +10,7 @@ UPDATE `project`
 SET `mcp_endpoint_settings` = json_set(
 	`mcp_endpoint_settings`,
 	'$.contextLayerModeEnabled',
-	json_extract(`mcp_endpoint_settings`, '$.toolsModeEnabled')
+	json(`mcp_endpoint_settings` -> '$.toolsModeEnabled')
 )
 WHERE json_type(`mcp_endpoint_settings`, '$.toolsModeEnabled') IS NOT NULL;
 --> statement-breakpoint

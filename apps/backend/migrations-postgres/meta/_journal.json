@@ -313,7 +313,7 @@
     {
       "idx": 44,
       "version": "7",
-      "when": 1779795155842,
+      "when": 1779795968778,
       "tag": "0044_migrate_mcp_endpoint_settings",
       "breakpoints": true
     }
